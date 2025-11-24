@@ -1,342 +1,300 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Bingo da Sustentabilidade — CLDF (Mobile)</title>
-<meta name="description" content="Bingo interativo mobile do Desafio Vertical - marque ações sustentáveis, conclua e veja o impacto real." />
-<style>
-  :root{
-    --bg:#f6fbf6;
-    --accent:#0b8a42;
-    --accent-2:#14b067;
-    --card:#ffffff;
-    --muted:#5a6b64;
-    --danger:#e05a4f;
-    --glass: rgba(255,255,255,0.82);
-  }
-  html,body{height:100%; margin:0; font-family:Inter, "Helvetica Neue", Arial, sans-serif; background:linear-gradient(180deg,#eef8ef 0%, #f6fbf6 100%);}
-  .app{
-    max-width:760px; margin:0 auto; min-height:100vh; display:flex; flex-direction:column;
-  }
-  header{
-    padding:18px 18px 8px; display:flex; align-items:center; gap:12px;
-  }
-  .logo{
-    width:56px; height:56px; border-radius:12px; background:var(--accent); display:flex; align-items:center; justify-content:center; color:white; font-weight:700; box-shadow:0 6px 18px rgba(11,138,66,0.14);
-  }
-  h1{font-size:18px; margin:0; color:var(--accent); line-height:1.05;}
-  p.lead{margin:6px 0 0; color:var(--muted); font-size:13px;}
-  main{padding:10px 14px 24px; flex:1 1 auto; display:flex; flex-direction:column; gap:12px;}
-  .grid{
-    display:grid; grid-template-columns:repeat(5,1fr); gap:10px;
-    touch-action: manipulation;
-  }
-  .cell{
-    background:var(--card); border-radius:10px; padding:10px; min-height:78px; border:2px solid rgba(11,138,66,0.08);
-    display:flex; align-items:center; justify-content:center; text-align:center; font-size:12px; color:#123; user-select:none;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-    transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .cell:active{transform:translateY(2px);}
-  .cell.active{ background: linear-gradient(180deg,#e6f9ec,#f2fff6); border-color:var(--accent-2); box-shadow:0 6px 18px rgba(11,138,66,0.12); transform:translateY(-6px); }
-  .cell .pts{position:absolute; top:6px; right:6px; font-size:11px; color:var(--muted); opacity:0.9;}
-  .controls{display:flex; gap:10px; justify-content:center; padding:6px;}
-  .btn{
-    background:var(--accent); color:white; border:none; padding:12px 16px; border-radius:10px; font-size:15px; cursor:pointer; min-width:140px;
-    box-shadow:0 8px 20px rgba(11,138,66,0.12);
-  }
-  .btn.ghost{background:transparent; border:1px solid rgba(11,138,66,0.12); color:var(--accent); box-shadow:none; min-width:90px;}
-  .result{
-    background:var(--glass); border-radius:12px; padding:12px; text-align:center; border:1px solid rgba(11,138,66,0.08);
-  }
-  .result h2{margin:6px 0 8px; color:var(--accent);}
-  .impact{font-size:14px; color:#103; margin:8px 0;}
-  .badge{display:inline-block; padding:8px 12px; border-radius:999px; font-weight:700; margin-top:8px;}
-  .badge.bronze{background:#f1e7d8; color:#8a5f2f;}
-  .badge.prata{background:#eceff6; color:#3a3f6b;}
-  .badge.ouro{background:linear-gradient(90deg,#ffd86b,#ffb84d); color:#3a2b07;}
-  footer{padding:12px 14px; text-align:center; font-size:12px; color:var(--muted);}
-  .small{font-size:12px; color:var(--muted); margin-top:6px;}
-  @media (max-width:420px){
-    .grid{gap:8px; grid-template-columns:repeat(4,1fr);} /* fallback on very small screens */
-    .cell{min-height:82px; font-size:13px; padding:12px;}
-  }
-  /* accessibility focus */
-  .cell:focus{outline:3px solid rgba(11,138,66,0.12); outline-offset:2px;}
-  .top-actions{display:flex; gap:8px; justify-content:space-between; align-items:center; margin-top:6px;}
-  .share-row{display:flex; gap:8px; justify-content:center; flex-wrap:wrap;}
-  .mini{font-size:12px; color:var(--muted);}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bingo da Sustentabilidade</title>
+
+  <!-- Fonte moderna -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #f4f8f1;
+      --text: #1a1a1a;
+      --card: #ffffff;
+      --border: #cfe6d1;
+      --accent: #2e6e36;
+    }
+
+    body.dark {
+      --bg: #1a1a1a;
+      --text: #f4f4f4;
+      --card: #2b2b2b;
+      --border: #4c7f55;
+      --accent: #6fd67b;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      margin: 0;
+      padding: 10px;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      transition: background 0.3s, color 0.3s;
+      font-size: 16px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 1.7rem;
+      color: var(--accent);
+      margin-bottom: 5px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h1 img {
+      width: 80px;
+      margin-bottom: 8px;
+    }
+
+    .instruction {
+      text-align: center;
+      font-size: 1rem;
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-weight: bold;
+    }
+
+    /* Controle de acessibilidade */
+    .accessibility {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .accessibility button {
+      background: var(--accent);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 6px;
+      color: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .accessibility button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Animação de seleção */
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.07); }
+      100% { transform: scale(1); }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .cell {
+      background: var(--card);
+      border-radius: 8px;
+      padding: 12px;
+      min-height: 85px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border: 2px solid var(--border);
+      transition: 0.2s;
+      user-select: none;
+      color: var(--text);
+    }
+
+    .cell.selected {
+      background: #d2f5c2;
+      border-color: #5cb85c;
+      font-weight: bold;
+      animation: pulse 0.3s ease;
+    }
+
+    body.dark .cell.selected {
+      background: #314d33;
+      border-color: #6fd67b;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 15px;
+      padding: 14px;
+      background: var(--accent);
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #result {
+      display: none;
+      margin-top: 20px;
+      background: var(--card);
+      padding: 20px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      font-size: 1rem;
+      text-align: center;
+      color: var(--text);
+    }
+  </style>
 </head>
+
 <body>
-  <div class="app" role="application" aria-label="Bingo da Sustentabilidade CLDF">
-    <header>
-      <div class="logo" aria-hidden="true">BV</div>
-      <div>
-        <h1>Bingo da Sustentabilidade</h1>
-        <p class="lead">CLDF — marque as práticas que você já realiza</p>
-      </div>
-    </header>
 
-    <main>
-      <section aria-labelledby="cartelaTitle">
-        <div style="display:flex;justify-content:space-between;align-items:center;">
-          <h2 id="cartelaTitle" style="font-size:15px;margin:0;color:#0b6;">Sua cartela</h2>
-          <div class="mini">Toque para marcar • Mobile-first</div>
-        </div>
+<div class="container">
 
-        <div id="grid" class="grid" role="grid" aria-label="Cartela com 25 ações sustentáveis">
-          <!-- cells injected by JS -->
-        </div>
+  <h1>
+    <img src="icone-bingo-sustentavel.png" alt="Ícone Sustentabilidade" />
+    Bingo da Sustentabilidade
+  </h1>
 
-        <div class="top-actions">
-          <div class="small">Pontuação: <strong id="scoreBadge">0</strong></div>
-          <div>
-            <button id="shuffleBtn" class="btn ghost" title="Gerar nova cartela">Nova cartela</button>
-          </div>
-        </div>
-
-        <div class="controls" style="margin-top:8px;">
-          <button id="conclude" class="btn" aria-label="Concluir e ver resultado">Concluir minha cartela</button>
-          <button id="clear" class="btn ghost" aria-label="Limpar marcações">Limpar</button>
-        </div>
-      </section>
-
-      <section id="resultSection" style="display:none;">
-        <div class="result" role="status" aria-live="polite">
-          <h2 id="resultTitle">Seu resultado</h2>
-          <div id="resultPoints" style="font-size:18px;font-weight:700;color:#0b6;">0 pontos</div>
-          <div class="impact" id="impactText">—</div>
-          <div id="seloContainer" style="margin-top:6px;"></div>
-
-          <div class="share-row" style="margin-top:10px;">
-            <button id="shareBtn" class="btn ghost">Compartilhar resultado</button>
-            <button id="tryAgain" class="btn ghost">Jogar novamente</button>
-          </div>
-
-          <div class="small" style="margin-top:10px;">Dica: gere um QR Code para a turma acessar a cartela no celular.</div>
-        </div>
-      </section>
-    </main>
-
-    <footer>
-      <div class="small">Protótipo móvel — Desafio Vertical CLDF • Desenvolvido para apresentação acadêmica</div>
-      <div class="small" style="margin-top:6px;">
-        Matriz SWOT (visual gerado): <a id="swotLink" href="/mnt/data/A_2D_digital_SWOT_analysis_chart_titled_%22MATRIZ_SW.png" target="_blank" rel="noopener">arquivo local (SWOT)</a>
-      </div>
-    </footer>
+  <!-- Botões de Acessibilidade -->
+  <div class="accessibility">
+    <button id="btnIncrease" onclick="changeFontSize(1)">A+</button>
+    <button id="btnDecrease" onclick="changeFontSize(-1)">A−</button>
+    <button onclick="toggleTheme()">🌗 Modo</button>
   </div>
 
-<script>
-/*
-  Bingo da Sustentabilidade - Mobile-first interactive
-  - Put this file on GitHub (index.html) and open on mobile or desktop
-  - Touch to mark cell, press "Concluir" to compute points + impact
-  - Uses client-side only (no backend)
-*/
+  <p class="instruction">
+    Toque nas ações que você pratica no dia a dia no seu trabalho:
+  </p>
 
-/* --- Configuration: actions with points (1, 2, or 3) --- */
-const ACTIONS = [
-  {text:"Subi escadas hoje", pts:2},
-  {text:"Apaguei as luzes ao sair", pts:1},
-  {text:"Evitei imprimir", pts:2},
-  {text:"Economizei água no banheiro", pts:1},
-  {text:"Levei garrafa reutilizável", pts:1},
-  {text:"Usei a escada 3x/semana", pts:3},
-  {text:"Reaproveitei materiais", pts:1},
-  {text:"Desliguei PC no fim do dia", pts:1},
-  {text:"Participei de campanha sustentável", pts:2},
-  {text:"Separei lixo reciclável", pts:1},
-  {text:"Levei pilhas ao descarte correto", pts:1},
-  {text:"Usei transporte público hoje", pts:2},
-  {text:"Incentivei colega a subir escadas", pts:2},
-  {text:"Reaproveitei embalagens", pts:1},
-  {text:"Fiz pausa ativa de 5 minutos", pts:1},
-  {text:"Completei 1 semana sem elevador", pts:3},
-  {text:"Divulguei campanha na intranet", pts:1},
-  {text:"Doei material pra reciclagem", pts:1},
-  {text:"Compartilhei carona com colega", pts:2},
-  {text:"Participei do Desafio Vertical", pts:3},
-  {text:"Marquei um colega para o desafio", pts:1},
-  {text:"Imprimi frente e verso", pts:1},
-  {text:"Troquei lâmpada por LED", pts:2},
-  {text:"Propus ideia sustentável", pts:2},
-  {text:"Ajudei a organizar evento sustentável", pts:2}
+  <div id="grid" class="grid"></div>
+
+  <button id="btnConcluir" onclick="finalizar()">Concluir</button>
+
+  <div id="result"></div>
+
+</div>
+
+<script>
+const actions = [
+  "Subir 1 andar de escada",
+  "Subir 2 andares de escada",
+  "Subir 3 andares ou mais de escada",
+  "Usar copo reutilizável",
+  "Levar garrafa de água",
+  "Apagar as luzes ao sair da sala",
+  "Aproveitar iluminação natural",
+  "Desligar o monitor ao se ausentar",
+  "Usar ventilação natural",
+  "Separar resíduos recicláveis",
+  "Evitar impressão desnecessária",
+  "Participar de ações sustentáveis",
+  "Desafiar um colega a subir escadas",
+  "Fazer pausa para alongamento",
+  "Caminhar no horário de almoço",
+  "Subir escadas no retorno do almoço",
+  "Evitar o elevador nos horários de pico",
+  "Evitar ar-condicionado quando possível"
 ];
 
-/* UI elements */
-const gridEl = document.getElementById('grid');
-const scoreBadge = document.getElementById('scoreBadge');
-const concludeBtn = document.getElementById('conclude');
-const clearBtn = document.getElementById('clear');
-const resultSection = document.getElementById('resultSection');
-const resultPoints = document.getElementById('resultPoints');
-const impactText = document.getElementById('impactText');
-const seloContainer = document.getElementById('seloContainer');
-const shareBtn = document.getElementById('shareBtn');
-const tryAgain = document.getElementById('tryAgain');
-const shuffleBtn = document.getElementById('shuffleBtn');
+function gerarGrid() {
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
 
-/* state */
-let currentActions = []; // array of objects with text, pts, id, active
-
-/* utilities */
-function shuffleArray(arr){
-  // Fisher-Yates
-  for(let i=arr.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]]=[arr[j],arr[i]];
-  }
-}
-
-/* initialize cartela */
-function renderCartela(useShuffle=false){
-  gridEl.innerHTML='';
-  let list = ACTIONS.map((a,i)=>({...a, id:i, active:false}));
-  if(useShuffle) shuffleArray(list);
-  currentActions = list;
-  list.forEach((item, idx) => {
-    const div = document.createElement('button');
-    div.className = 'cell';
-    div.setAttribute('role','gridcell');
-    div.setAttribute('aria-pressed','false');
-    div.tabIndex = 0;
-    div.innerHTML = `<span style="display:block;padding:4px 4px">${item.text}</span><span class="pts" aria-hidden="true">+${item.pts}</span>`;
-    div.addEventListener('click', () => toggleCell(item.id, div));
-    div.addEventListener('keyup', (e) => { if(e.key === 'Enter' || e.key === ' ') toggleCell(item.id, div); });
-    gridEl.appendChild(div);
+  actions.forEach(action => {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    cell.textContent = action;
+    cell.onclick = () => cell.classList.toggle("selected");
+    grid.appendChild(cell);
   });
-  updateScore(0);
-  resultSection.style.display = 'none';
 }
 
-/* toggle selection */
-function toggleCell(id, el){
-  const idx = currentActions.findIndex(a=>a.id===id);
-  if(idx === -1) return;
-  currentActions[idx].active = !currentActions[idx].active;
-  if(currentActions[idx].active){
-    el.classList.add('active');
-    el.setAttribute('aria-pressed','true');
+gerarGrid();
+
+// Finalizar
+function finalizar() {
+  const cells = document.querySelectorAll('.cell.selected');
+  const pontos = cells.length;
+
+  let impacto = "";
+  let selo = "";
+
+  if (pontos <= 5) {
+    selo = "🥉 Selo Bronze";
+    impacto = "Você já iniciou sua jornada sustentável!";
+  } else if (pontos <= 12) {
+    selo = "🥈 Selo Prata";
+    impacto = "Você já equivale a subir 20 andares por semana!";
+  } else if (pontos <= 17) {
+    selo = "🥇 Selo Ouro";
+    impacto = "Você economiza energia suficiente para uma sala por 10 dias!";
   } else {
-    el.classList.remove('active');
-    el.setAttribute('aria-pressed','false');
+    selo = "🏆 Selo EcoLendário";
+    impacto = "Seu impacto equivale a plantar 10 árvores!";
   }
-  const sum = currentActions.reduce((s,a)=> s + (a.active ? a.pts : 0), 0);
-  updateScore(sum);
+
+  document.getElementById("grid").style.display = "none";
+  document.getElementById("btnConcluir").style.display = "none";
+
+  const result = document.getElementById("result");
+  result.style.display = "block";
+  result.innerHTML = `
+    <h2>${selo}</h2>
+    <p><strong>Total de ações sustentáveis:</strong> ${pontos}</p>
+    <p>${impacto}</p>
+    <button onclick="reiniciar()">Refazer</button>
+  `;
 }
 
-/* update score display */
-function updateScore(total){
-  scoreBadge.textContent = total;
+function reiniciar() {
+  document.getElementById("result").style.display = "none";
+  document.getElementById("grid").style.display = "grid";
+  document.getElementById("btnConcluir").style.display = "block";
+  gerarGrid();
 }
 
-/* scoring -> impact conversion */
-function computeImpact(points){
-  // formula base: energy (Wh) = points * 12 Wh
-  const energyWh = points * 12; // Wh
-  const energykWh = energyWh / 1000;
-  // equivalents
-  const lamp100W_hours = energyWh / 100; // hours of a 100W lamp
-  const co2kg = energykWh * 0.475; // approximate grid factor
-  // user-friendly messages
-  let message = '';
-  if(energyWh <= 100){
-    message = `Você economizou aproximadamente ${energykWh.toFixed(3)} kWh — energia suficiente para manter uma lâmpada LED de 10W acesa por cerca de ${(energyWh/10).toFixed(1)} horas.`;
-  } else if(energyWh <= 300){
-    message = `Você economizou ${energykWh.toFixed(2)} kWh — energia equivalente para iluminar um corredor pequeno por ~1 dia.`;
-  } else if(energyWh <= 600){
-    message = `Impacto maior: ${energykWh.toFixed(2)} kWh — energia próxima à consumida por 50 ciclos simbólicos de um elevador (estimativa).`;
-  } else {
-    message = `Alto impacto: ${energykWh.toFixed(2)} kWh — energia para iluminar um andar por um fim de semana (estimativa).`;
-  }
-  return {energyWh, energykWh, lamp100W_hours, co2kg, message};
+/* ===========================
+   CONTROLE DE FONTE
+=========================== */
+let currentFont = 16;
+const minFont = 12;
+const maxFont = 17;
+
+function changeFontSize(delta) {
+  let newFont = currentFont + delta;
+
+  if (newFont < minFont) newFont = minFont;
+  if (newFont > maxFont) newFont = maxFont;
+
+  currentFont = newFont;
+  document.body.style.fontSize = currentFont + "px";
+
+  updateFontButtons();
 }
 
-/* derive selo */
-function getSelo(points){
-  if(points <= 15) return {name:'Bronze', cls:'bronze', text:'Iniciante Sustentável'};
-  if(points <= 30) return {name:'Prata', cls:'prata', text:'Agente Verde'};
-  return {name:'Ouro', cls:'ouro', text:'Servidor Sustentável Modelo'};
+function updateFontButtons() {
+  document.getElementById("btnIncrease").disabled = currentFont >= maxFont;
+  document.getElementById("btnDecrease").disabled = currentFont <= minFont;
 }
 
-/* show result */
-function showResult(){
-  const total = currentActions.reduce((s,a)=> s + (a.active ? a.pts : 0), 0);
-  const impact = computeImpact(total);
-  resultSection.style.display = 'block';
-  resultPoints.textContent = `${total} pontos`;
-  impactText.textContent = impact.message + ` (≈ ${impact.co2kg.toFixed(3)} kg CO₂ evitado).`;
-  const selo = getSelo(total);
-  seloContainer.innerHTML = `<span class="badge ${selo.cls}">${selo.name} — ${selo.text}</span>`;
-  // focus for accessibility
-  document.getElementById('resultTitle').focus?.();
+updateFontButtons();
+
+/* ===========================
+   MODO ESCURO
+=========================== */
+function toggleTheme() {
+  document.body.classList.toggle("dark");
 }
-
-/* share / copy result */
-async function shareResult(){
-  const total = currentActions.reduce((s,a)=> s + (a.active ? a.pts : 0), 0);
-  const impact = computeImpact(total);
-  const selo = getSelo(total);
-  const text = `Meu resultado no Bingo da Sustentabilidade (Desafio Vertical CLDF): ${total} pontos — selo ${selo.name}. ${impact.message}`;
-  // try Web Share API
-  if(navigator.share){
-    try{
-      await navigator.share({ title:'Bingo da Sustentabilidade', text });
-      return;
-    }catch(e){
-      // ignore
-    }
-  }
-  // fallback: copy to clipboard
-  try{
-    await navigator.clipboard.writeText(text);
-    alert('Resultado copiado para a área de transferência. Cole onde quiser.');
-  }catch(e){
-    alert('Não foi possível compartilhar automaticamente. Por favor, copie manualmente:\n\n' + text);
-  }
-}
-
-/* clear selections */
-function clearSelections(){
-  currentActions.forEach((a, i) => {
-    a.active = false;
-    const el = gridEl.children[i];
-    if(el) { el.classList.remove('active'); el.setAttribute('aria-pressed','false'); }
-  });
-  updateScore(0);
-  resultSection.style.display = 'none';
-}
-
-/* try again (reveal cartela again) */
-function restartForNew(){
-  clearSelections();
-  // scroll to top for mobile
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-
-/* events */
-concludeBtn.addEventListener('click', () => {
-  showResult();
-  // scroll to result on small devices
-  setTimeout(()=> {
-    const rect = resultSection.getBoundingClientRect();
-    if(rect.top > window.innerHeight / 2){
-      window.scrollTo({top: window.scrollY + rect.top - 30, behavior:'smooth'});
-    }
-  }, 100);
-});
-clearBtn.addEventListener('click', clearSelections);
-tryAgain.addEventListener('click', restartForNew);
-shareBtn.addEventListener('click', shareResult);
-shuffleBtn.addEventListener('click', ()=> renderCartela(true));
-
-/* init */
-renderCartela(false);
-
-/* Keyboard accessibility: allow Enter/Space to toggle cells (handled on creation) */
 </script>
+
 </body>
 </html>
